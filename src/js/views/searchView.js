@@ -1,4 +1,4 @@
-import { elements} from './base';
+import { elements } from './base';
 
 export const getInput = () => elements.searchInput.value;
 
@@ -11,14 +11,22 @@ export const clearResults = () => {
     elements.searchResPages.innerHTML = '';
 };
 
+export const highlightSelected = id => {
+    const resultsArr = Array.from(document.querySelectorAll('.results__link'));
+    resultsArr.forEach(el => {
+        el.classList.remove('results__link--active');
+    });
+    document.querySelector(`a[href*="${id}"]`).classList.add('results__link--active');
+}
+
 const limitRecipeTitle = (title, limit = 17) => {
     const newTitle = [];
-    if(title.length > limit) {
+    if (title.length > limit) {
         title.split(' ').reduce((acc, cur) => {
-            if(acc + cur.length <= limit) {
+            if (acc + cur.length <= limit) {
                 newTitle.push(cur);
             }
-            return acc + cur.length
+            return acc + cur.length;
         }, 0);
         return `${newTitle.join(' ')}...`;
     }
@@ -49,7 +57,7 @@ const renderRecipe = recipe => {
         </a>
     </li> 
     `;
-    elements.searchResList.insertAdjacentHTML('beforeend', markup)
+    elements.searchResList.insertAdjacentHTML('beforeend', markup);
 };
 
 // type prev or next
@@ -66,10 +74,10 @@ const renderButtons = (page, numResults, resPerPage) => {
     const pages = Math.ceil(numResults/resPerPage);
 
     let button;
-    if(page === 1 && pages > 1) {
+    if (page === 1 && pages > 1) {
         // next page button
         button = createButton(page, 'next');
-    } else if(page < pages) {
+    } else if (page < pages) {
         // both buttons
         button = `
             ${createButton(page, 'next')}
