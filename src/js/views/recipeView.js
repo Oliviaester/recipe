@@ -1,5 +1,5 @@
 import { elements } from './base';
-import { Fraction } from 'fractional';
+import Fraction from 'fraction.js';
 
 export const clearRecipe = () => {
     elements.recipe.innerHTML = '';
@@ -12,11 +12,11 @@ const formatCount = count => {
         if(!dec) return count;
 
         if (int === 0) {
-            const fr = new Fraction(count);
-            return `${fr.numerator}/${fr.denominator}`;
+            const fr = new Fraction(count).simplify(0.00001);
+            return fr.toFraction(true);
         } else {
-            const fr = new Fraction(count - int);
-            return `${int} ${fr.numerator}/${fr.denominator}`;
+            const fr = new Fraction(count - int).simplify(0.00001);
+            return `${int} ${fr.toFraction(true)}`;
         }
     }
     return '?';
@@ -84,7 +84,7 @@ export const renderRecipe = recipe => {
             ${recipe.ingredients.map(el => createIngredient(el)).join('')}
         </ul>
 
-        <button class="btn-small recipe__btn">
+        <button class="btn-small recipe__btn recipe__btn--add">
             <svg class="search__icon">
                 <use href="img/icons.svg#icon-shopping-cart"></use>
             </svg>

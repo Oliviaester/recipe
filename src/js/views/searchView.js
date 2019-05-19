@@ -92,6 +92,7 @@ const renderButtons = (page, numResults, resPerPage) => {
 };
 
 export const renderResults = (recipes, page = 1, resPerPage = 10) => {
+    console.log('recipes', recipes, 'page', page, 'resPerPage', resPerPage);
     // render results of current page
     const start = (page - 1) * resPerPage;
     const end = page * resPerPage;
